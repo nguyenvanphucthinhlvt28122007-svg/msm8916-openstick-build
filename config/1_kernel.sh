@@ -6,6 +6,10 @@ rm -rf /output/*; mkdir -p /output/working
 # override kernel config
 cp /config/msm8916_defconfig /linux/arch/arm64/configs/msm8916_defconfig
 
+# override dts file if present
+if [ -f /config/msm8916-handsome-openstick-uz801.dts ]; then
+  cp /config/msm8916-handsome-openstick-uz801.dts /linux/arch/arm64/boot/dts/qcom/msm8916-handsome-openstick-uz801.dts
+fi
 # compile
 cd /linux
 export CROSS_COMPILE=aarch64-linux-gnu-
