@@ -74,3 +74,8 @@
 		bias-pull-up;
 	};
 };
+
+&mpss {
+    status = "disabled";
+};
+
