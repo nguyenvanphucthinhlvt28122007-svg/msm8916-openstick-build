@@ -27,13 +27,6 @@
 		stdout-path = "serial0";
 	};
 
-	reserved-memory {
-		mpss_mem: gps_mem: mpss@86800000 {
-			reg = <0x0 0x86800000 0x0 0x5500000>;
-			no-map;
-		};
-	};
-
 	usb_id: usb-id {
 		compatible = "linux,extcon-usb-gpio";
 		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
