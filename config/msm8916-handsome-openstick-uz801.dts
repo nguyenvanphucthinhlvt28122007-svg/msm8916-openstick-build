@@ -77,18 +77,20 @@
 
 &mpss {
     status = "disabled";
-    /delete-property/ memory-region;
 };
 
 &venus {
 	status = "disabled";
-	/delete-property/ memory-region;
 };
 
-/ {
-	reserved-memory {
-		/delete-node/ mpss@86800000;
-		/delete-node/ mba@86700000;
-		/delete-node/ venus@8ab00000;
-	};
+&mpss_mem {
+	reg = <0x0 0x86800000 0x0 0x0>;
+};
+
+&mba_mem {
+	reg = <0x0 0x86700000 0x0 0x0>;
+};
+
+&venus_mem {
+	reg = <0x0 0x8ab00000 0x0 0x0>;
 };
