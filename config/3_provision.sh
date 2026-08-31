@@ -21,6 +21,9 @@ mkdir -p /rootfs/output
 mount --bind /config /rootfs/config
 mount --bind /output /rootfs/output
 
+# Ensure DNS resolution is available inside the chroot
+cp /etc/resolv.conf /rootfs/etc/resolv.conf
+
 chroot /rootfs /bin/bash /config/provision.sh
 
 ########################

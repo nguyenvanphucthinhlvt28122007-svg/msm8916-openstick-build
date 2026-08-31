@@ -2,9 +2,10 @@
 set -ex
 
 echo "debian-$DEBIAN_VERSION" > /etc/hostname
-passwd -d root
+echo "root:1" | chpasswd
 
-apt -y install mobile-tweaks-common network-manager
+apt -y install mobile-tweaks-common network-manager git python3 curl sudo
+
 
 ########################
 # KERNEL
@@ -59,6 +60,25 @@ cat <<EOF >> /etc/dnsmasq.conf
 listen-address=192.168.68.1
 dhcp-range=192.168.68.10, 192.168.68.254, 12h
 EOF
+
+# Configure SSH to allow root login via Wi-Fi with password or empty password
+mkdir -p /etc/ssh/sshd_config.d
+cat <<EOF > /etc/ssh/sshd_config.d/openstick.conf
+PermitRootLogin yes
+PasswordAuthentication yes
+PermitEmptyPasswords yes
+EOF
+
+if [ -f /etc/ssh/sshd_config ]; then
+  sed -i 's/#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
+  sed -i 's/#\?PermitEmptyPasswords.*/PermitEmptyPasswords yes/g' /etc/ssh/sshd_config
+  sed -i 's/#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+fi
+
+# Pre-install KIAUH
+if [ ! -d /root/kiauh ]; then
+  git clone https://github.com/dw-0/kiauh.git /root/kiauh
+fi
 
 ####
 
