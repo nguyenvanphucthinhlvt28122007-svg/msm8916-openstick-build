@@ -77,10 +77,12 @@
 
 &mpss {
     status = "disabled";
+    /delete-property/ memory-region;
 };
 
 &venus {
 	status = "disabled";
+	/delete-property/ memory-region;
 };
 
 / {
