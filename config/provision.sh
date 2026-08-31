@@ -67,12 +67,16 @@ cat <<EOF > /etc/ssh/sshd_config.d/openstick.conf
 PermitRootLogin yes
 PasswordAuthentication yes
 PermitEmptyPasswords yes
+UseDNS no
+GSSAPIAuthentication no
 EOF
 
 if [ -f /etc/ssh/sshd_config ]; then
   sed -i 's/#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
   sed -i 's/#\?PermitEmptyPasswords.*/PermitEmptyPasswords yes/g' /etc/ssh/sshd_config
   sed -i 's/#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+  sed -i 's/#\?UseDNS.*/UseDNS no/g' /etc/ssh/sshd_config
+  sed -i 's/#\?GSSAPIAuthentication.*/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 fi
 
 # Pre-install KIAUH
