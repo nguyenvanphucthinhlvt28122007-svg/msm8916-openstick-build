@@ -64,18 +64,12 @@ cp /output/working/openstick-failsafe-guard/bin/gc-static /usr/bin/gc && chmod +
 # dhcp-range=192.168.68.10, 192.168.68.254, 12h
 # EOF
 
-# Setup DHCP for USB-to-LAN adapter
-mkdir -p /etc/network/interfaces.d
-cat <<EOF > /etc/network/interfaces.d/lan
-allow-hotplug eth0
-iface eth0 inet dhcp
+# Xóa cấu hình tĩnh để nhường NetworkManager quản lý, giúp gửi Hostname lên router
+rm -f /etc/network/interfaces.d/lan
 
-allow-hotplug eth1
-iface eth1 inet dhcp
-
-allow-hotplug usb0
-iface usb0 inet dhcp
-EOF
+# Đảm bảo SSH keys được tạo và dịch vụ SSH tự chạy
+ssh-keygen -A || true
+systemctl enable ssh || true
 
 # Configure SSH to allow root login via Wi-Fi with password or empty password
 mkdir -p /etc/ssh/sshd_config.d
