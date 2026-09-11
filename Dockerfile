@@ -5,7 +5,7 @@ RUN apt-get -y update --fix-missing && apt-get -y upgrade && \
     ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone && \
     apt-get install -y --no-install-recommends binfmt-support qemu-user-static gcc-10-aarch64-linux-gnu kernel-package fakeroot simg2img img2simg mkbootimg bison && \
     apt-get install -y --no-install-recommends debootstrap build-essential fakeroot bc kmod cpio flex cpio libncurses5-dev libelf-dev libssl-dev && \
-    apt-get install -y --no-install-recommends build-essential git flex gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libssl-dev rsync
+    apt-get install -y --no-install-recommends build-essential git ca-certificates flex gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libssl-dev rsync
 
 ########################
 ## KERNEL
