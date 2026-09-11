@@ -42,23 +42,39 @@ cp /output/working/openstick-failsafe-guard/bin/adbd-static /usr/bin/adbd && chm
 cp /output/working/openstick-failsafe-guard/bin/gc-static /usr/bin/gc && chmod +x /usr/bin/gc
 
 # service bits from https://github.com/hyx0329/openstick-failsafe-guard
-cp /output/working/openstick-failsafe-guard/openstick-gc-manager/openstick-gc-manager.sh /usr/sbin/ && chmod +x /usr/sbin/openstick-gc-manager.sh
-cp /output/working/openstick-failsafe-guard/openstick-gc-manager/*.service /usr/lib/systemd/system/
-ln -s /usr/lib/systemd/system/adbd.service /etc/systemd/system/multi-user.target.wants/adbd.service
-ln -s /usr/lib/systemd/system/openstick-gc-startup.service /etc/systemd/system/multi-user.target.wants/openstick-gc-startup.service
+# Disabled for host mode
+# cp /output/working/openstick-failsafe-guard/openstick-gc-manager/openstick-gc-manager.sh /usr/sbin/ && chmod +x /usr/sbin/openstick-gc-manager.sh
+# cp /output/working/openstick-failsafe-guard/openstick-gc-manager/*.service /usr/lib/systemd/system/
+# ln -s /usr/lib/systemd/system/adbd.service /etc/systemd/system/multi-user.target.wants/adbd.service
+# ln -s /usr/lib/systemd/system/openstick-gc-startup.service /etc/systemd/system/multi-user.target.wants/openstick-gc-startup.service
 
 # service bits from https://salsa.debian.org/Mobian-team/mobile-usb-networking
-cp /output/working/mobile-usb-networking/mobile-usb-gadget /usr/sbin/ && chmod +x /usr/sbin/mobile-usb-gadget
-cp /output/working/mobile-usb-networking/mobile-usb-network-setup /usr/sbin/ && chmod +x /usr/sbin/mobile-usb-network-setup
-cp /output/working/mobile-usb-networking/debian/mobile-usb-networking.mobile-usb-gadget.service /usr/lib/systemd/system/mobile-usb-gadget.service
-cp /output/working/mobile-usb-networking/debian/mobile-usb-networking.mobile-usb-network-setup.service /usr/lib/systemd/system/mobile-usb-network-setup.service
-ln -s /usr/lib/systemd/system/mobile-usb-gadget.service /etc/systemd/system/multi-user.target.wants/mobile-usb-gadget.service
-ln -s /usr/lib/systemd/system/mobile-usb-network-setup.service /etc/systemd/system/multi-user.target.wants/mobile-usb-network-setup.service
+# Disabled for host mode
+# cp /output/working/mobile-usb-networking/mobile-usb-gadget /usr/sbin/ && chmod +x /usr/sbin/mobile-usb-gadget
+# cp /output/working/mobile-usb-networking/mobile-usb-network-setup /usr/sbin/ && chmod +x /usr/sbin/mobile-usb-network-setup
+# cp /output/working/mobile-usb-networking/debian/mobile-usb-networking.mobile-usb-gadget.service /usr/lib/systemd/system/mobile-usb-gadget.service
+# cp /output/working/mobile-usb-networking/debian/mobile-usb-networking.mobile-usb-network-setup.service /usr/lib/systemd/system/mobile-usb-network-setup.service
+# ln -s /usr/lib/systemd/system/mobile-usb-gadget.service /etc/systemd/system/multi-user.target.wants/mobile-usb-gadget.service
+# ln -s /usr/lib/systemd/system/mobile-usb-network-setup.service /etc/systemd/system/multi-user.target.wants/mobile-usb-network-setup.service
 
 # DHCP server dnsmasq:
-cat <<EOF >> /etc/dnsmasq.conf
-listen-address=192.168.68.1
-dhcp-range=192.168.68.10, 192.168.68.254, 12h
+# Disabled for host mode
+# cat <<EOF >> /etc/dnsmasq.conf
+# listen-address=192.168.68.1
+# dhcp-range=192.168.68.10, 192.168.68.254, 12h
+# EOF
+
+# Setup DHCP for USB-to-LAN adapter
+mkdir -p /etc/network/interfaces.d
+cat <<EOF > /etc/network/interfaces.d/lan
+allow-hotplug eth0
+iface eth0 inet dhcp
+
+allow-hotplug eth1
+iface eth1 inet dhcp
+
+allow-hotplug usb0
+iface usb0 inet dhcp
 EOF
 
 # Configure SSH to allow root login via Wi-Fi with password or empty password
